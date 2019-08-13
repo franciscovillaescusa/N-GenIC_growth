@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#BSUB -G indark                #group name
+#BSUB -q longparallel          #queue name
+#########BSUB -W 2880
+#BSUB -a openmpi               #set parallel environment 
+######BSUB -R "span[ptile=2]"
+#BSUB -J G3_0.0                #job name
+#BSUB -n 6                     #number of cpus
+#BSUB -o G3.out                #output file
+#BSUB -e G3.error              #error file
+
+/usr/local/lsf/9.1/linux2.6-glibc2.3-x86_64/bin/mpirun.lsf ./g3_yb_hz/P-Gadget3 ics.param >> logfile

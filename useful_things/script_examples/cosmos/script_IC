@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -q small2
+#PBS -N IC              # Name of your job
+#PBS -j oe              # Capture STDOUT and STDERR into one output file
+#PBS -V                 # Pass on to job your whole current environment
+#
+# Resource specifications - please be as accurate as possible
+#
+#PBS -l nodes=2:ppn=8     # No. processors required
+#PBS -l walltime=01:00:00  # wall clock time required
+#PBS -l mem=120gb          # Maximum total physical memory required
+#
+# Get the number of allocated CPUs
+NP=$PBS_NP
+C_LAUNCH="mpirun -np $NP dplace -s1"
+#
+cd $PBS_O_WORKDIR
+########################################################################
+# User commands below. Modify accordingly
+########################################################################
+$C_LAUNCH ../n-genic_growth/N-GenIC N-GenIC_0.6.param >> logIC
+python IC_analyzer.py >> logIC

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#BSUB -G indark                #group name
+#BSUB -q longDebug             #queue name
+#########BSUB -W 2880
+#BSUB -a openmpi               #set parallel environment 
+#########BSUB -R "span[hosts=1]"
+#BSUB -J IC                    #job name
+#BSUB -n 1                     #number of cpus
+#BSUB -o IC.out                #output file
+#BSUB -e IC.error              #error file
+
+/usr/local/lsf/9.1/linux2.6-glibc2.3-x86_64/bin/mpirun.lsf ../n-genic_growth/N-GenIC N-GenIC.param >> logIC
+
+

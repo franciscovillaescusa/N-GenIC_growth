@@ -1,0 +1,29 @@
+##### USAGE #####
+1) edit reps_0.0eV.param
+2) reps reps_0.0eV.param
+3) edit file_format_Hz.py
+4) python file_format_Hz.py
+5) edit N-GenIC.param
+6) N-GenIC N-GenIC.param
+#################
+
+This folder contains the files needed to generate the ICs of a 
+massless neutrino cosmology. Notice that this kind of ICs should be used 
+when other models with massive neutrinos are used as well. If no models with
+massive neutrinos are used it is better to just use the 2LPT code by 
+Scoccimarro.
+
+In order to generate the ICs for the simulation you need to edit the file 
+reps_0.0eV.param according to your cosmology and location of CAMB. Once the 
+file is ready run reps with it: https://github.com/matteozennaro/reps
+
+The code will produce the matter power spectra, transfer functions and growth
+rate functions that N-GenIC_growth needs. The code will also produce a tabulated
+H(z) function needed to run Gadget. The file file_format_Hz.py is used to change
+the format of that file in order to be input into Gadget.
+
+Finally, edit the file N-GenIC.param according to the parameters of your 
+simulation and run it to generate the ICs.
+
+If your cosmological model is Planck and your starting redshift is z=99 you can
+use directly N-GenIC with the files already produced in the previous folder.

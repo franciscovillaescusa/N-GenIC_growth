@@ -1,0 +1,66 @@
+This is the N-GenIC code used to generate the N-body initial conditions.
+The codes uses the Zel'dovich approximation to generate the IC.
+The code can create the ICs for pure CDM simulations, simulations containing
+CDM & Baryons, CDM & neutrinos and CDM Baryons & neutrinos.
+
+To compile the code the flags
+
+-DMULTICOMPONENTGLASSFILE
+-DDIFFERENT_TRANSFER_FUNC
+-DNEUTRINOS
+
+have to be switched on, even for pure CDM simulations.
+
+For simulations with no baryons, set OmegaBaryon to 0 in the N-GenIC parameter 
+file.
+
+We have modified the files:
+
+-allvars.h
+-allvars.c
+-read_param.c
+-main.c
+
+to allow the user whether or not Rayleigh sample the modes amplitude.
+
+
+The code is able to deal with k-dependent growth factors, as those present in 
+massive neutrino cosmologies. In the parameterfile the file containing the 
+growth = dlog(delta) / dlog(a) is set with the parameter FileWithGrowth. That
+file should be computed previously from two close power spectra from CAMB.
+
+The value of H(z_initial) should also be input in the parameter file under 
+the parameter.
+
+The value of sigma8 in the parameterfile is just a sanity check if the
+parameter ReNormalizeInputSpectrum is set to 0.
+
+The code has the functionality to output the linear density field used to
+generate the initial conditions. For this switch on the OUTPUT_DF flag in
+the Makefile. The output will be three different files
+
+-Coordinates_ptype_X.Y
+-Amplitudes_ptype_X.Y
+-Phases_ptype_X.Y
+
+where X can be 0 (gas),1 (cdm) and 2 (neutrinos), and Y goes from 0 to the
+effective number of cpus used when running the code
+
+All the files have a header:
+Nfiles(int32) Nmesh(int32) Local_nx(int32)
+
+The header is followed by the data from Local_nx*Nmesh*(Nmesh/2 + 1) modes
+In Coordinates is np.int64 and in Amplitudes and Phases is np.float32
+
+Coordinates is a single long integer containing the position of the mode:
+Coordinate = (i*Nmesh + j)*(Nmesh/2 + 1) + k, where i and j go from 0 to Nmesh
+and k goes from 0 to Nmesh/2 + 1
+
+Amplitudes contains a float with the value of the amplitude (A from A*exp(i*theta))
+The units can be obtained by multiplying its number by BoxSize**(3.0/2.0)
+
+Phases contains a float with the value of the phase (no units)
+
+The Pk_library.pyx of the Pylians library contain a routine (Pk_NGenIC_IC_field)
+to compute the Pk from these files
+

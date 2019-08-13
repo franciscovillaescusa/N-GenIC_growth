@@ -1,0 +1,116 @@
+	
+Nmesh            1024      % This is the size of the FFT grid used to 
+                           % compute the displacement field. One
+                           % should have Nmesh >= Nsample.
+
+Nsample          512       % sets the maximum k that the code uses,
+                           % i.e. this effectively determines the
+                           % Nyquist frequency that the code assumes,
+                           % k_Nyquist = 2*PI/Box * Nsample/2
+                           % Normally, one chooses Nsample such that
+                           % Ntot =  Nsample^3, where Ntot is the
+                           % total number of particles
+ 
+
+Box              1000000.0   % Periodic box size of simulation
+
+FileBase         ics       % Base-filename of output files
+OutputDir        ./        % Directory for output
+
+GlassFile        ../n-genic_growth/GLASS/dummy_glass_NU_64_64.dat % Glass-File
+GlassTileFac     8                % Number of times the glass file is
+                                  % tiled in each dimension (must be
+                                  % an integer)
+
+
+Omega               0.3175    % Total matter density  (at z=0)
+OmegaLambda         0.6825    % Cosmological constant (at z=0)
+OmegaBaryon         0.0000    % Baryon density        (at z=0)
+OmegaDM_2ndSpecies  0.00715   % Omega for a second dark matter species (at z=0)
+HubbleParam         0.6711    % Hubble paramater
+Hzi                 56.9296   % H(z) at starting redshift in (km/s/kpc/h)
+
+
+Redshift         99           % Starting redshift
+Sigma8       1.03084091E-02   % power spectrum normalization at that Redshift!
+
+
+
+SphereMode       1         % if "1" only modes with |k| < k_Nyquist are
+                           % used (i.e. a sphere in k-space), 
+			   % otherwise modes with
+                           % |k_x|,|k_y|,|k_z| < k_Nyquist are used
+                           % (i.e. a cube in k-space)
+          
+
+WhichSpectrum    2         % "1" selects Eisenstein & Hu spectrum,
+		           % "2" selects a tabulated power spectrum in
+                           % the file 'FileWithInputSpectrum'
+                           % otherwise, Efstathiou parametrization is used
+
+
+FileWithInputSpectrum   ../CAMB_TABLES/ics_matterpow_99.dat  % filename of tabulated MATTER powerspectrum from CAMB
+                                           
+FileWithTransfer        ../CAMB_TABLES/ics_transfer_99.dat   % filename of transfer functions from CAMB
+
+FileWithBGrowth         ./growth_B_z=99.dat
+FileWithCDMGrowth       ./growth_CDM_z=99.dat
+FileWithNUGrowth        ./growth_NU_z=99.dat
+
+
+InputSpectrum_UnitLength_in_cm  3.085678e24 % defines length unit of tabulated
+                                            % input spectrum in cm/h. 
+                                            % Note: This can be chosen 
+					    % different from UnitLength_in_cm
+
+ReNormalizeInputSpectrum   0                % if set to zero, the
+                                            % tabulated spectrum is
+                                            % assumed to be normalized
+                                            % already in its amplitude to
+                                            % the starting redshift,
+                                            % otherwise this is recomputed
+                                            % based on the specified sigma8
+
+
+ShapeGamma       0.201     % only needed for Efstathiou power spectrum 
+PrimordialIndex  1.0       % may be used to tilt the primordial index (one if tabulated)
+
+		
+RayleighSampling   0         % fix modes amplitude to sqrt(Pk): 1 (NO) 0 (Yes)  
+Seed               181170    % seed for IC-generator
+
+
+NumFilesWrittenInParallel 8  % limits the number of files that are
+                             % written in parallel when outputting
+
+
+UnitLength_in_cm          3.085678e21  % defines output length unit (in cm/h) 
+UnitMass_in_g             1.989e43     % defines mass unit of output (in g/cm)
+UnitVelocity_in_cm_per_s  1e5          % defines output velocity unit (in cm/sec)
+
+
+
+WDM_On               0      % Putting a '1' here will enable a WDM small-scale
+                            % smoothing of the power spectrum
+
+WDM_Vtherm_On        0      % If set to '1', the (warm) dark matter particles
+		     	    % will receive an additional random thermal velocity
+                            % corresponding to their particle mass
+
+WDM_PartMass_in_kev  10.0   % This is the particle mass in keV of the
+		     	    % WDM particle
+
+
+NU_On                1
+NU_Vtherm_On         1
+NU_PartMass_in_ev    0.3
+
+
+
+
+
+
+
+
+
+

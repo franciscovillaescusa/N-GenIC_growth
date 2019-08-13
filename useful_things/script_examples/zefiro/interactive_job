@@ -1,0 +1,1 @@
+bsub -G indark -q debug -Is /bin/bash
